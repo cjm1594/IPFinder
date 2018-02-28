@@ -1,0 +1,7 @@
+cnn.com
+facebook.com
+totallyfake.roc
+google.com
+reddit.com
+reddit.fake
+facebook.fake
