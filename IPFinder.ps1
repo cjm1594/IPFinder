@@ -1,21 +1,24 @@
+#Gets filename to be read from user.
 $File = Read-Host -Prompt 'Input the path of the file containing the hostnames'
 $Names = Get-Content "$File"
+
+#Loops through each list entry.
 foreach ($Name in $Names)
 {
-	$Counter = 0
 	Write-Host "Ip addresses associated with '$Name'"
-	$Results = [System.Net.Dns]::GetHostAddresses("$Name")
-	foreach($Result in $Results)
-	{
-		$IP = $Result.IPAddressToString
-		If(-NOT (($IP -eq '198.105.244.228') -OR ($IP -eq '198.105.254.228')))
+	
+	#Writes all found IPs for each hostname to the console.
+	try{
+		$Results = [System.Net.Dns]::GetHostAddresses("$Name")
+		foreach($Result in $Results)
 		{
-			$Counter = 1
+			$IP = $Result.IPAddressToString
 			Write-Host $IP
 		}
 	}
-	If($Counter -eq 0)
-	{
+
+	#Lets user know that no IPs were found if GetHostAddresses fails.
+	catch{
 		Write-Host "No IP addresses found for this host."
 	}
 	Write-Host " "
